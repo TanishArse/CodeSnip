@@ -1,4 +1,4 @@
-function Header(){
+function Header({onSearchChange}){
     return (
        
          
@@ -6,8 +6,8 @@ function Header(){
             <h1>CodeSnip</h1>
             <div className="searchbar">
 
-                <input className="search" type="search" placeholder="Search..."></input>
-               <i class="fa-solid fa-magnifying-glass"></i>
+                <input  className="search" type="search" placeholder="Search..." onChange={(e)=>onSearchChange(e.target.value)}></input>
+               <i className="fa-solid fa-magnifying-glass"></i>
                <select>
                 <option>All</option>
                 <option>React</option>

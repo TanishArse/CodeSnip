@@ -9,12 +9,20 @@ function App() {
   const handleAddSnippet = (snippet) => {
     setSnippets((prev) => [snippet, ...prev]);
   };
+  const [SearchQuery,setSearchQuery]=useState("");
+
+  
+  const query= SearchQuery.toLowerCase();
+
+  const filteredSnippets=snippets.filter((snippet)=>
+    snippet.title.toLowerCase().includes(query) ||
+    snippet.code.toLowerCase().includes(query));
 
   return (
     <>
-    <Header/>
+    <Header onSearchChange={setSearchQuery} />
       <AddSnippet onAdd={handleAddSnippet} />
-      <SnippetList snippets={snippets} />
+      <SnippetList snippets={filteredSnippets} />
     </>
   );
 }
