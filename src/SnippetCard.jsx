@@ -21,7 +21,7 @@ function SnippetCard({ snippet }) {
             <span key={i} className="tag">
               {tag.trim()}
             </span>
-          ))}
+          ))} 
       </div>
 
       
