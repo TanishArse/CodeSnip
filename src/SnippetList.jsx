@@ -1,13 +1,16 @@
 import SnippetCard from "./SnippetCard";
 
-function SnippetList({ snippets}) {
+function SnippetList({ snippets,onDelete}) {
   
 
   return (
     <div id="snippetlist">
-      {snippets.map((snippet, index) => (
-        <div key={index}>
-        <SnippetCard  snippet={snippet} />
+      {snippets.map((snippet) => (
+        <div key={snippet.id}>
+        <SnippetCard 
+         snippet={snippet} 
+         onDelete={onDelete}
+        />
         </div>
       ))}
       

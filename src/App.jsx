@@ -5,13 +5,18 @@ import SnippetList from "./SnippetList";
 
 function App() {
   const [snippets, setSnippets] = useState([]);
-
-  const handleAddSnippet = (snippet) => {
-    setSnippets((prev) => [snippet, ...prev]);
-  };
   const [SearchQuery,setSearchQuery]=useState("");
   const [selectedTag,setSelectedTag]=useState("")
 
+
+  const handleAddSnippet = (snippet) => {
+     const newSnippet = {
+    ...snippet,
+    id: Date.now()
+  };
+    setSnippets((prev) => [newSnippet, ...prev]);
+  };
+ 
   
   const query= SearchQuery.toLowerCase();
 
@@ -23,20 +28,25 @@ function App() {
       snippet.code.toLowerCase().includes(query);
 
     const matchesTag =
-      selectedTag === "" || (snippet.tags ?? []).includes(selectedTag); // ← new
+      selectedTag === "" || (snippet.tags ?? []).includes(selectedTag);
 
     return matchesSearch && matchesTag;
   });
-  
+  const handleDelete=(id)=>{
+    setSnippets(prev =>
+  prev.filter(snippet => snippet.id !== id)
+)
+  }
 
   return (
     <>
     <Header onSearchChange={setSearchQuery} 
     onTagChange={setSelectedTag}
     tags={allTags}
+    
     />
       <AddSnippet onAdd={handleAddSnippet} />
-      <SnippetList snippets={filteredSnippets} />
+      <SnippetList snippets={filteredSnippets} onDelete={handleDelete} />
     </>
   );
 }

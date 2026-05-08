@@ -172,6 +172,14 @@ pre {
   white-space: pre-wrap;   
   word-break: break-word;
 }
+.cardButtons{
+  display: inline-block;
+  margin-left: 250px;
+
+
+
+
+}
 #copy{
       /* position: relative;
       left: 10px; 
@@ -181,7 +189,17 @@ pre {
       width: 50px; */
       border: none;
       background-color: #fff;
-      margin-left: 350px;
+      /* margin-left: 350px; */
           
           
+}
+#delete{
+  border: none;
+  background-color:#fff ;
+  font-size: 20px;
+
+}
+.tag{
+  color: #f85114;
+ 
 }
