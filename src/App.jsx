@@ -20,15 +20,27 @@ function App() {
   
   const query= SearchQuery.toLowerCase();
 
-  const allTags=[...new Set(snippets.flatMap((s)=>s.tags??[]))]
+  const allTags = [
+  ...new Set(
+    snippets.flatMap((s) =>
+      (s.tags || "")
+        .split(",")
+        .map((tag) => tag.trim())
+    )
+  )
+];
 
  const filteredSnippets = snippets.filter((snippet) => {
     const matchesSearch =
       snippet.title.toLowerCase().includes(query) ||
       snippet.code.toLowerCase().includes(query);
 
-    const matchesTag =
-      selectedTag === "" || (snippet.tags ?? []).includes(selectedTag);
+   const matchesTag =
+  selectedTag === "" ||
+  (snippet.tags || "")
+    .split(",")
+    .map((tag) => tag.trim())
+    .includes(selectedTag);
 
     return matchesSearch && matchesTag;
   });
