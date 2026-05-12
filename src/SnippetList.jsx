@@ -1,6 +1,6 @@
 import SnippetCard from "./SnippetCard";
 
-function SnippetList({ snippets,onDelete}) {
+function SnippetList({ snippets,onDelete,onEdit}) {
   
 
   return (
@@ -10,6 +10,7 @@ function SnippetList({ snippets,onDelete}) {
         <SnippetCard 
          snippet={snippet} 
          onDelete={onDelete}
+         onEdit={onEdit}
         />
         </div>
       ))}

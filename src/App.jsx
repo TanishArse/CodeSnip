@@ -7,15 +7,33 @@ function App() {
   const [snippets, setSnippets] = useState([]);
   const [SearchQuery,setSearchQuery]=useState("");
   const [selectedTag,setSelectedTag]=useState("")
+  const [editingSnippet,setEditingSnippet]=useState(null);
 
 
   const handleAddSnippet = (snippet) => {
-     const newSnippet = {
-    ...snippet,
-    id: Date.now()
-  };
+
+  if (editingSnippet) {
+
+    setSnippets((prev) =>
+      prev.map((s) =>
+        s.id === editingSnippet.id
+          ? { ...snippet, id: editingSnippet.id }
+          : s
+      )
+    );
+
+    setEditingSnippet(null);
+  }
+  else {
+
+    const newSnippet = {
+      ...snippet,
+      id: Date.now(),
+    };
+
     setSnippets((prev) => [newSnippet, ...prev]);
-  };
+  }
+};
  
   
   const query= SearchQuery.toLowerCase();
@@ -26,6 +44,7 @@ function App() {
       (s.tags || "")
         .split(",")
         .map((tag) => tag.trim())
+        .filter((tag)=>tag!=="")
     )
   )
 ];
@@ -49,6 +68,10 @@ function App() {
   prev.filter(snippet => snippet.id !== id)
 )
   }
+  const handleEdit=(snippet)=>{
+   setEditingSnippet(snippet)
+  }
+
 
   return (
     <>
@@ -57,8 +80,8 @@ function App() {
     tags={allTags}
     
     />
-      <AddSnippet onAdd={handleAddSnippet} />
-      <SnippetList snippets={filteredSnippets} onDelete={handleDelete} />
+      <AddSnippet onAdd={handleAddSnippet} onEdit={handleEdit}  editingSnippet={editingSnippet}/>
+      <SnippetList snippets={filteredSnippets} onDelete={handleDelete} onEdit={handleEdit} />
     </>
   );
 }

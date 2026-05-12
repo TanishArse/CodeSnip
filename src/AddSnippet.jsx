@@ -1,9 +1,17 @@
-import { useState } from "react";
+import {useEffect, useState } from "react";
 
-function AddSnippet({ onAdd }) {
+function AddSnippet({ onAdd ,editingSnippet}) {
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [tags, setTags] = useState("");
+
+  useEffect(() => {
+  if (editingSnippet) {
+    setTitle(editingSnippet.title);
+    setCode(editingSnippet.code);
+    setTags(editingSnippet.tags);
+  }
+}, [editingSnippet]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,12 +64,15 @@ function AddSnippet({ onAdd }) {
 
         <br />
         <button id="submitbutton" type="submit">
-          + Add Snippet
+          {/* + Add Snippet */}
+           {editingSnippet ? "Update Snippet" : "Add Snippet"}
         </button>
 
       </form>
     </div>
   );
+
+
 }
 
 export default AddSnippet;

@@ -1,4 +1,4 @@
-function SnippetCard({ snippet,onDelete }) {
+function SnippetCard({ snippet,onDelete,onEdit}) {
   
   return (
     <div className="snippetcard">
@@ -10,6 +10,9 @@ function SnippetCard({ snippet,onDelete }) {
       </button>
       <button id="delete" onClick={()=>{onDelete(snippet.id)}}>
         <i className="fa-regular fa-trash-can"></i>
+      </button>
+      <button id= "edit" onClick={()=>onEdit(snippet)}>
+        <i className="fa-regular fa-pen-to-square"></i>
       </button>
       </div>
        

@@ -173,8 +173,9 @@ pre {
   word-break: break-word;
 }
 .cardButtons{
-  display: inline-block;
-  margin-left: 250px;
+  display: flex;
+  margin-left: 200px;
+  
   
   
 
@@ -193,6 +194,7 @@ pre {
       cursor: pointer;
       height: 3rem;
       width: 3rem;
+      margin: 1px;
       
       
       /* margin-left: 350px; */
@@ -212,6 +214,7 @@ pre {
   cursor: pointer;
   height: 3rem;
   width: 3rem;
+  margin: 1px;
  
   
 
@@ -227,4 +230,18 @@ pre {
 .tag{
   color: #60A5FA;
  
+}
+#edit{
+  border: none;
+  background-color:#fff ;
+  font-size: 20px;
+  cursor: pointer;
+  height: 3rem;
+  width: 3rem;
+  margin: 1px;
+}
+#edit:hover{
+  background-color:#e1e0e0 ;
+  border-radius:5px;
+  border-radius: 50%;
 }
