@@ -67,7 +67,7 @@ select{
 }
 
 .form{
-  width: 300px;
+ max-width: 700px;
   display:flex;
   flex-direction: column;
   align-items:center;
@@ -113,14 +113,16 @@ select{
 label {
   margin-bottom: 4px;
   font-weight: 500;
+
 }
-.textarea{
-  
-  min-height: 180px;      
-  font-family: "Courier New", Courier, monospace;
-  background-color: #F3F4F6;
-   vertical-align: top;
-}
+
+#langdropDown{
+  border-left: none;
+  margin-bottom: 20px;
+  border: 1px solid#D1D5DB;
+  border-radius: 6px;
+
+ }
 #submitbutton{
   background-color: #60A5FA;
   color:#ffff;
@@ -138,19 +140,6 @@ label {
   padding: 20px;
   overflow: hidden;
 }
-
-/* 
-.snippetcard {
-  min-height: 180px;   
-  overflow: hidden;
-  border: 1px solid #E5E7EB;
-  border-radius: 10px;
-  padding: 20px;
-  transform: translateY(0);
-  transition: all 0.2s ease;
-  position: relative;
-  
-} */
 .snippetcard:hover {
   border-color: #3B82F6;
   transform: translateY(-2px);
@@ -183,9 +172,6 @@ pre {
 
 }
 #copy{
-      /* position: relative;
-      left: 10px; 
-      top: 5px; */
       font-size: 20px;
       /* height: 50px;
       width: 50px; */
@@ -195,11 +181,6 @@ pre {
       height: 3rem;
       width: 3rem;
       margin: 1px;
-      
-      
-      /* margin-left: 350px; */
-          
-          
 }
 #copy:hover{
   background-color:#e1e0e0 ;

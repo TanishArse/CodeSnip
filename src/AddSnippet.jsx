@@ -1,9 +1,18 @@
 import {useEffect, useState } from "react";
+import Editor from "@monaco-editor/react";
 
 function AddSnippet({ onAdd ,editingSnippet}) {
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [tags, setTags] = useState("");
+  const [language, setLanguage] = useState("javascript");
+  const languages=[ "javascript",
+  "python",
+  "cpp",
+  "java",
+  "html",
+  "css"
+];
 
   useEffect(() => {
   if (editingSnippet) {
@@ -41,14 +50,44 @@ function AddSnippet({ onAdd ,editingSnippet}) {
         </div>
 
         <div className="form-group">
+          <label>Select a language:</label>
+          <select id="langdropDown"
+  value={language}
+  onChange={(e) => setLanguage(e.target.value)}
+>
+  {languages.map((lang) => (
+    <option key={lang} value={lang}>
+      {lang}
+    </option>
+  ))}
+</select>
           <label>Code:</label>
-          <textarea
-            rows={8}
-            className="textarea"
-            placeholder="Paste your code snippet here..."
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-          />
+          <Editor
+           height="300px"
+           width="100%"
+           language="javascript"
+           value={code}
+           onChange={(value) => setCode(value || "")}
+            options={{
+              fontSize: 16,
+    fontFamily: "JetBrains Mono",
+    minimap: { enabled: false },
+    automaticLayout: true,
+    wordWrap: "on",
+    scrollBeyondLastLine: false,
+    padding: {
+      top: 16,
+    },
+    cursorBlinking: "smooth",
+    cursorSmoothCaretAnimation: "on",
+    smoothScrolling: true,
+    roundedSelection: true,
+    lineNumbersMinChars: 3,
+    
+  }}
+           
+          
+/>
         </div>
 
         <div className="form-group">

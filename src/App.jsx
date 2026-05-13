@@ -80,7 +80,7 @@ function App() {
     tags={allTags}
     
     />
-      <AddSnippet onAdd={handleAddSnippet} onEdit={handleEdit}  editingSnippet={editingSnippet}/>
+      <AddSnippet onAdd={handleAddSnippet} editingSnippet={editingSnippet}/>
       <SnippetList snippets={filteredSnippets} onDelete={handleDelete} onEdit={handleEdit} />
     </>
   );
