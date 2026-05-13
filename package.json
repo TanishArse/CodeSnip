@@ -1,8 +1,6 @@
 {
   "homepage": "https://TanishArse.github.io/CodeSnip",
   "name": "codesnip",
-{
-  "name": "my-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
