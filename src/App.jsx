@@ -1,14 +1,21 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import Header from "./Header";
 import AddSnippet from "./AddSnippet";
 import SnippetList from "./SnippetList";
 
 function App() {
-  const [snippets, setSnippets] = useState([]);
+  const [snippets, setSnippets] = useState(()=>{
+    const savedSnippets=localStorage.getItem('snippets')
+    return savedSnippets?JSON.parse(savedSnippets):[];
+  });
   const [SearchQuery,setSearchQuery]=useState("");
   const [selectedTag,setSelectedTag]=useState("")
   const [editingSnippet,setEditingSnippet]=useState(null);
 
+useEffect(() => {
+    localStorage.setItem("snippets", JSON.stringify(snippets));
+  }, [snippets]);
 
   const handleAddSnippet = (snippet) => {
 
