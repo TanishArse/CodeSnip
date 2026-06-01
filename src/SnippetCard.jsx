@@ -2,7 +2,12 @@ function SnippetCard({ snippet,onDelete,onEdit}) {
   
   return (
     <div className="snippetcard">
-      <div className="cardButtons">
+      <div className="heading">
+        <h2 className="snippet-title">
+        {snippet.title}
+      </h2>
+        
+        <div className="cardButtons">
         <button id="copy"
         onClick={() => navigator.clipboard.writeText(snippet.code)}
       >
@@ -15,11 +20,9 @@ function SnippetCard({ snippet,onDelete,onEdit}) {
         <i className="fa-regular fa-pen-to-square"></i>
       </button>
       </div>
-       
 
-      <h2 className="snippet-title">
-        {snippet.title}
-      </h2>
+      </div>
+      
 
       <pre className="snippet-code">
         {snippet.code}
