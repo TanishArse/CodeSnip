@@ -65,7 +65,7 @@ function AddSnippet({ onAdd ,editingSnippet}) {
           <Editor
            height="300px"
            width="100%"
-           language="javascript"
+           language={language.toLowerCase()}
            value={code}
            onChange={(value) => setCode(value || "")}
             options={{
