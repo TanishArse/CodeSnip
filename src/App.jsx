@@ -10,7 +10,7 @@ function App() {
     return savedSnippets?JSON.parse(savedSnippets):[];
   });
   const [SearchQuery,setSearchQuery]=useState("");
-  const [selectedTag,setSelectedTag]=useState("")
+  const [selectedTag,setSelectedTag]=useState("All")
   const [editingSnippet,setEditingSnippet]=useState(null);
 
 useEffect(() => {
@@ -62,7 +62,7 @@ useEffect(() => {
       snippet.code.toLowerCase().includes(query);
 
    const matchesTag =
-  selectedTag === "" ||
+  selectedTag === "All" ||
   (snippet.tags || "")
     .split(",")
     .map((tag) => tag.trim())

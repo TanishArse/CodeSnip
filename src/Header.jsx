@@ -9,6 +9,7 @@ function Header({onSearchChange,onTagChange,tags=[]}){
                 <input  className="search" type="search" placeholder="Search..." onChange={(e)=>onSearchChange(e.target.value)}></input>
                <i className="fa-solid fa-magnifying-glass"></i>
                <select onChange={(e)=>onTagChange(e.target.value)}>
+                <option value="All">All</option>
                
                 {tags.map((tag)=>
                 <option key={tag} value={tag}>
