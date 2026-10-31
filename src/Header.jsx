@@ -2,7 +2,7 @@ function Header({onSearchChange,onTagChange,tags=[]}){
     return (
        
          
-        <div className= "headerr">
+        <div className= "header text-amber-200">
             <h1>CodeSnip</h1>
             <div className="searchbar">
 
