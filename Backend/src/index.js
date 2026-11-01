@@ -1,1 +1,2 @@
-console.log("server is running")
+import connectDB from "./db/index.js"
+connectDB()
