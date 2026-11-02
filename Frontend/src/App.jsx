@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import Header from "./Header";
-import AddSnippet from "./AddSnippet";
-import SnippetList from "./SnippetList";
+import Header from "./components/Header";
+import AddSnippet from "./components/AddSnippet";
+import SnippetList from "./components/SnippetList";
 
 function App() {
   const [snippets, setSnippets] = useState(()=>{
