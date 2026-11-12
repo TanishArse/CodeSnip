@@ -1,3 +1,4 @@
+
 function Logo({ className = "h-9 w-9" }) {
   return (
     <svg
@@ -7,11 +8,17 @@ function Logo({ className = "h-9 w-9" }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <rect width="36" height="36" rx="8" className="fill-blue-600" />
+      <rect
+        width="36"
+        height="36"
+        rx="7"
+        className="fill-[#356859]"
+      />
+
       <path
         d="M14 12l-6 6 6 6M22 12l6 6-6 6"
         className="stroke-white"
-        strokeWidth="2.5"
+        strokeWidth="2.3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
