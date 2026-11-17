@@ -8,6 +8,7 @@ const startServer=async()=>{
 
     app.listen(PORT,()=>{
         console.log(`Server is running on port ${PORT}`)
+        console.log(`Server is running on port 5000`)
     })
 }
 startServer();

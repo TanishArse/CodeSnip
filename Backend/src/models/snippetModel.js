@@ -6,7 +6,7 @@ const snippetSchema = new mongoose.Schema({
     owner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required:true,
+        // required:true,
         index:true
     },
 
@@ -36,4 +36,5 @@ const snippetSchema = new mongoose.Schema({
   },{timestamps:true});
 
   snippetSchema.index({ owner: 1, title: 1 }, { unique: true });
-export const Snippet =mongoose.model("Snippet",snippetSchema)
+const Snippet =mongoose.model("Snippet",snippetSchema);
+export default Snippet;
