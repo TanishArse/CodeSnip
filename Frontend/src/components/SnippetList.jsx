@@ -9,7 +9,7 @@ function SnippetList({ snippets, onDelete, onEdit }) {
     >
       {snippets.map((snippet) => (
         <SnippetCard
-          key={snippet.id}
+          key={snippet._id}
           snippet={snippet}
           onDelete={onDelete}
           onEdit={onEdit}
@@ -20,3 +20,4 @@ function SnippetList({ snippets, onDelete, onEdit }) {
 }
 
 export default SnippetList;
+

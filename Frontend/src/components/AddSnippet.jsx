@@ -14,36 +14,44 @@ function AddSnippet({ onAdd, editingSnippet }) {
     "cpp",
     "java",
     "html",
-    "css",
+    "css",``
   ];
 
   useEffect(() => {
     if (editingSnippet) {
       setTitle(editingSnippet.title);
       setCode(editingSnippet.code);
-      setTags(editingSnippet.tags);
+      setTags(Array.isArray(editingSnippet.tags)?editingSnippet.tags.join(", "):editingSnippet.tags ||"");
       setLanguage(editingSnippet.language || "javascript");
     }
   }, [editingSnippet]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
 
     if (!title.trim() || !code.trim()) return;
 
-    const newSnippet = {
-      title,
-      code,
-      tags,
-      language,
-    };
+   const newSnippet = {
+    title,
+    code,
+    language,
+    tags: tags
+        .split(/[,\s]+/)
+        .map(tag => tag.trim().toLowerCase())
+        .filter(Boolean)
+        .slice(0, 10)
+};
+    const success=await onAdd(newSnippet);
 
-    onAdd(newSnippet);
-
-    setTitle("");
+   if(success){
+     setTitle("");
     setCode("");
     setTags("");
     setLanguage("javascript");
+
+   }
+
+   
   };
 
   return (

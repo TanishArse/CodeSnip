@@ -3,60 +3,77 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import AddSnippet from "./components/AddSnippet";
 import SnippetList from "./components/SnippetList";
+import { getSnippets,createSnippet,updateSnippet,deleteSnippet } from "./api/snippetApi";
 
 function App() {
-  const [snippets, setSnippets] = useState(() => {
-    try {
-      const savedSnippets = localStorage.getItem("snippets");
-      return savedSnippets ? JSON.parse(savedSnippets) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [snippets,setSnippets]=useState([]);
+  
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState("All");
   const [editingSnippet, setEditingSnippet] = useState(null);
  
   useEffect(() => {
-    localStorage.setItem("snippets", JSON.stringify(snippets));
-  }, [snippets]);
+const fetchSnippets=async()=>{
+    try{
+      const data=await getSnippets();
+      setSnippets(data);
+
+    }catch(error){
+      console.error("failed to fetch snippets",error)
+
+    }
+  } 
+  fetchSnippets();
+}, []);
 
   // Add or update snippet
-  const handleAddSnippet = (snippet) => {
-    if (editingSnippet) {
-      setSnippets((prev) =>
-        prev.map((s) =>
-          s.id === editingSnippet.id
-            ? { ...snippet, id: editingSnippet.id }
-            : s
-        )
-      );
+  const handleAddSnippet = async (snippet) => {
+    try {
+        if (editingSnippet) {
+            const updatedSnippet = await updateSnippet(
+                editingSnippet._id,
+                snippet
+            );
 
-      setEditingSnippet(null);
-    } else {
-      const newSnippet = {
-        ...snippet,
-        id: Date.now(),
-      };
+            setSnippets((prev) =>
+                prev.map((s) =>
+                    s._id === editingSnippet._id
+                        ? updatedSnippet
+                        : s
+                )
+            );
 
-      setSnippets((prev) => [newSnippet, ...prev]);
+            setEditingSnippet(null);
+        } else {
+            const response = await createSnippet(snippet);
+
+            setSnippets((prev) => [
+                response,
+                ...prev
+            ]);
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error(
+            "Failed to save snippet:",
+            error.response?.data || error.message
+        );
+        return false;
     }
-  };
+};
+    
 
   // Search and tag filtering
   const query = searchQuery.toLowerCase();
 
   const allTags = [
-    ...new Set(
-      snippets.flatMap((s) =>
-        (s.tags || "")
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter((tag) => tag !== "")
-      )
-    ),
-  ];
+  ...new Set(
+    snippets.flatMap((s) => s.tags || [])
+  ),
+];
 
   const filteredSnippets = snippets.filter((snippet) => {
     const matchesSearch =
@@ -64,27 +81,34 @@ function App() {
       snippet.code.toLowerCase().includes(query);
 
     const matchesTag =
-      selectedTag === "All" ||
-      (snippet.tags || "")
-        .split(",")
-        .map((tag) => tag.trim())
-        .includes(selectedTag);
-
+  selectedTag === "All" ||
+  (snippet.tags || []).includes(selectedTag);
     return matchesSearch && matchesTag;
   });
 
 
   // Delete snippet
-  const handleDelete = (id) => {
+  const handleDelete = async(id) => {
+    try{
+       await deleteSnippet(id);
     setSnippets((prev) =>
-      prev.filter((snippet) => snippet.id !== id)
+      prev.filter((snippet) => snippet._id !== id)
     );
-
-    if (editingSnippet?.id === id) {
+     if (editingSnippet?._id === id) {
       setEditingSnippet(null);
     }
-  };
+  
 
+
+
+    }catch(error){
+      console.error("failed to delete snippet",
+        error.response?.data||error.message
+      )
+
+    }}
+   
+   
   // Edit snippet
   const handleEdit = (snippet) => {
     setEditingSnippet(snippet);

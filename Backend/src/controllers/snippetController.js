@@ -19,7 +19,7 @@ const getAllSnippets=async(req,res)=>{
     }
 }
 
-const getSinglesnippet=async(req,res)=>{
+const getSingleSnippet=async(req,res)=>{
     try{
         const {id}=req.params;
         const snippet=await Snippet.findById(id);
@@ -52,6 +52,7 @@ const getSinglesnippet=async(req,res)=>{
 
 const createSnippet=async(req,res)=>{
     try{
+         console.log("Received snippet:", req.body);
         const newSnippet=await Snippet.create(req.body)
         res.status(201).json({
             success:true,
@@ -60,10 +61,12 @@ const createSnippet=async(req,res)=>{
         })
 
     }catch(error){res.status(500).json({
+        
         success:false,
-        message:error.message
+        message:'enter a valid snippet'
 
     })
+    console.error("CREATE SNIPPET ERROR:", error);
        
 
     }
@@ -75,7 +78,7 @@ const updateSnippet=async(req,res)=>{
         const updatedSnippet=await Snippet.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {new:true,runValidators:true}
+            { returnDocument: 'after', runValidators: true }
         )
         if (!updatedSnippet) {
     return res.status(404).json({
@@ -145,7 +148,7 @@ const deleteSnippet= async(req,res)=>{
 }
 
 export{getAllSnippets,
-    getSinglesnippet,
+    getSingleSnippet,
     createSnippet,
     updateSnippet,
 deleteSnippet}

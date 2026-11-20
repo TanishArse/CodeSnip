@@ -50,7 +50,7 @@ function SnippetCard({ snippet, onDelete, onEdit }) {
 
           <button
             title="Delete snippet"
-            onClick={() => onDelete(snippet.id)}
+            onClick={() => onDelete(snippet._id)}
             className="flex h-8 w-8 items-center justify-center rounded text-[#929792] hover:bg-[#FCEEEE] hover:text-[#B74747]"
           >
             <i className="fa-regular fa-trash-can"></i>
@@ -67,16 +67,15 @@ function SnippetCard({ snippet, onDelete, onEdit }) {
 
       {/* Tags */}
       <div className="flex shrink-0 flex-wrap items-center gap-2 border-t border-[#EAEAE6] bg-white px-4 py-3">
-        {snippet.tags &&
-          snippet.tags.split(",").map((tag, i) => (
-            <span
-              key={i}
-              className="rounded-sm border border-[#DCE7DF] bg-[#F2F6F2] px-2 py-1 text-[11px] font-medium text-[#356859]"
-            >
-              #{tag.trim()}
-            </span>
-          ))}
-      </div>
+    {(snippet.tags || []).map((tag, i) => (
+        <span
+            key={i}
+            className="rounded-sm border border-[#DCE7DF] bg-[#F2F6F2] px-2 py-1 text-[11px] font-medium text-[#356859]"
+        >
+            #{tag.trim()}
+        </span>
+    ))}
+</div>
 
     </article>
   );
