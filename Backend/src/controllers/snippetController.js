@@ -52,7 +52,6 @@ const getSingleSnippet=async(req,res)=>{
 
 const createSnippet=async(req,res)=>{
     try{
-         console.log("Received snippet:", req.body);
         const newSnippet=await Snippet.create(req.body)
         res.status(201).json({
             success:true,

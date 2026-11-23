@@ -5,9 +5,11 @@ import { getAllSnippets ,getSingleSnippet,createSnippet,updateSnippet,deleteSnip
 const router= express.Router();
 
 router.get("/",getAllSnippets);
-router.get("/:id",getSingleSnippet);
+
 router.post("/",createSnippet);
+
 router.put("/:id", updateSnippet);
-router.delete("/:id",deleteSnippet)
+router.delete("/:id",deleteSnippet);
+router.get("/:id",getSingleSnippet);
 export default router;
 

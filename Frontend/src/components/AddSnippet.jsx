@@ -6,6 +6,7 @@ function AddSnippet({ onAdd, editingSnippet }) {
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [tags, setTags] = useState("");
+  const [errors, setErrors] = useState({});
   const [language, setLanguage] = useState("javascript");
 
   const languages = [
@@ -14,44 +15,70 @@ function AddSnippet({ onAdd, editingSnippet }) {
     "cpp",
     "java",
     "html",
-    "css",``
+    "css"
   ];
 
   useEffect(() => {
     if (editingSnippet) {
       setTitle(editingSnippet.title);
       setCode(editingSnippet.code);
-      setTags(Array.isArray(editingSnippet.tags)?editingSnippet.tags.join(", "):editingSnippet.tags ||"");
+      setTags(
+        Array.isArray(editingSnippet.tags)
+          ? editingSnippet.tags.join(", ")
+          : editingSnippet.tags || ""
+      );
       setLanguage(editingSnippet.language || "javascript");
+      setErrors({});
     }
   }, [editingSnippet]);
 
-  const handleSubmit =async (e) => {
+  // Parse and validate form data
+  const validateForm = (parsedTags) => {
+    const newErrors = {};
+
+    if (!title.trim()) {
+      newErrors.title = "Title is required";
+    }
+
+    if (!code.trim()) {
+      newErrors.code = "Code is required";
+    }
+
+    if (parsedTags.length > 10) {
+      newErrors.tags = "You can add a maximum of 10 tags";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title.trim() || !code.trim()) return;
+    const parsedTags = tags
+      .split(",")
+      .map(tag => tag.trim().toLowerCase())
+      .filter(Boolean);
 
-   const newSnippet = {
-    title,
-    code,
-    language,
-    tags: tags
-        .split(/[,\s]+/)
-        .map(tag => tag.trim().toLowerCase())
-        .filter(Boolean)
-        .slice(0, 10)
-};
-    const success=await onAdd(newSnippet);
+    if (!validateForm(parsedTags)) return;
 
-   if(success){
-     setTitle("");
-    setCode("");
-    setTags("");
-    setLanguage("javascript");
+    const newSnippet = {
+      title: title.trim(),
+      code,
+      language,
+      tags: parsedTags
+    };
 
-   }
+    const success = await onAdd(newSnippet);
 
-   
+    if (success) {
+      setTitle("");
+      setCode("");
+      setTags("");
+      setLanguage("javascript");
+      setErrors({});
+    }
   };
 
   return (
@@ -59,9 +86,8 @@ function AddSnippet({ onAdd, editingSnippet }) {
       id="formbox"
       className="w-full rounded-lg border border-[#E3E4E0] bg-white p-5 sm:p-6"
     >
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-5">
 
-       
         <div className="border-b border-[#EAEAE6] pb-4">
           <h2 className="text-lg font-semibold tracking-tight text-[#242A30]">
             {editingSnippet ? "Edit snippet" : "New snippet"}
@@ -88,9 +114,15 @@ function AddSnippet({ onAdd, editingSnippet }) {
             type="text"
             placeholder="e.g. React useState example"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setErrors(prev => ({ ...prev, title: "" }));
+            }}
           />
+
+          {errors.title && (
+            <p className="text-sm text-red-500">{errors.title}</p>
+          )}
         </div>
 
         {/* Language selector */}
@@ -133,7 +165,10 @@ function AddSnippet({ onAdd, editingSnippet }) {
               theme="vs-dark"
               language={language}
               value={code}
-              onChange={(value) => setCode(value || "")}
+              onChange={(value) => {
+                setCode(value || "");
+                setErrors(prev => ({ ...prev, code: "" }));
+              }}
               options={{
                 fontSize: 14,
                 fontFamily: "JetBrains Mono",
@@ -150,6 +185,10 @@ function AddSnippet({ onAdd, editingSnippet }) {
               }}
             />
           </div>
+
+          {errors.code && (
+            <p className="text-sm text-red-500">{errors.code}</p>
+          )}
         </div>
 
         {/* Tags */}
@@ -167,12 +206,19 @@ function AddSnippet({ onAdd, editingSnippet }) {
             type="text"
             placeholder="e.g. react, js, api"
             value={tags}
-            onChange={(e) => setTags(e.target.value)}
+            onChange={(e) => {
+              setTags(e.target.value);
+              setErrors(prev => ({ ...prev, tags: "" }));
+            }}
           />
 
           <p className="text-[11px] text-[#929792]">
-            Separate multiple tags with commas.
+            Separate multiple tags with commas. Maximum 10 tags.
           </p>
+
+          {errors.tags && (
+            <p className="text-sm text-red-500">{errors.tags}</p>
+          )}
         </div>
 
         {/* Submit */}

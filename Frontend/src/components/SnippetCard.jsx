@@ -67,13 +67,15 @@ function SnippetCard({ snippet, onDelete, onEdit }) {
 
       {/* Tags */}
       <div className="flex shrink-0 flex-wrap items-center gap-2 border-t border-[#EAEAE6] bg-white px-4 py-3">
-    {(snippet.tags || []).map((tag, i) => (
-        <span
-            key={i}
-            className="rounded-sm border border-[#DCE7DF] bg-[#F2F6F2] px-2 py-1 text-[11px] font-medium text-[#356859]"
-        >
-            #{tag.trim()}
-        </span>
+  {(snippet.tags || [])
+    .filter(tag => typeof tag === "string")
+    .map((tag, i) => (
+      <span
+        key={i}
+        className="rounded-sm border border-[#DCE7DF] bg-[#F2F6F2] px-2 py-1 text-[11px] font-medium text-[#356859]"
+      >
+        #{tag.trim()}
+      </span>
     ))}
 </div>
 
